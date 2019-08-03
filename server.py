@@ -7,6 +7,7 @@ import dateutil.parser
 from urllib.error import URLError, HTTPError
 
 
+
 app = Flask(__name__)
 app.secret_key = settings.SECRET_KEY
 accuKey = settings.ACCU_KEY
@@ -35,14 +36,14 @@ def getTextLocKey():
     lookUpText = urllib.parse.quote(lookUpText)
     
     searchUrl = "http://dataservice.accuweather.com/locations/v1/cities/US/search?apikey="  + accuKey + "&q=" + lookUpText
-    print('printing search URL from textLocKey function' + searchUrl)
+    # print('printing search URL from textLocKey function' + searchUrl)
     try:
         with urllib.request.urlopen(searchUrl) as url:
             data = json.loads(url.read().decode())
-        print(url.getheaders())
-        print(url.getcode())
-        print('type of data: ' + str(type(data)))
-        print(len(data))
+        # print(url.getheaders())
+        # print(url.getcode())
+        # print('type of data: ' + str(type(data)))
+        # print(len(data))
         if url.getcode() == 200:
             if not data or len(data) == 0:
                 session['error'] = 500
@@ -54,32 +55,34 @@ def getTextLocKey():
                 session['locationKey'] = locationKey
                 session['cityName'] = cityName
                 session['stateName'] = stateName
-                print(locationKey)
+                # print(locationKey)
                 return redirect('/results')
     except urllib.error.HTTPError as e:
-        if e.code == 503:
-            session['error'] = 503
+        if e.code: 
+            session['error'] = e.code
             return render_template ('index.html', errNum=session['error'])
-        if e.code > 400:
-            error = url.getcode()
-            session['error'] = error
-            return render_template ('index.html', errNum=session['error'])
-        print('Error code: ', e.code)
+        # if e.code == 503:
+        #     session['error'] = 503
+        #     return render_template ('index.html', errNum=session['error'])
+        # if e.code > 400:
+        #     session['error'] = e.code
+        #     return render_template ('index.html', errNum=session['error'])
+        # print('Error code: ', e.code)
     
 
 @app.route('/zipLocKey', methods=['GET'])
 def getLocationKey():
     zipCode = session['zipCode']
     searchUrl = "http://dataservice.accuweather.com/locations/v1/postalcodes/US/search?apikey=" + accuKey + "&q=" + zipCode
-    print(searchUrl)
+    # print(searchUrl)
 
     try:
         with urllib.request.urlopen(searchUrl) as url:
             data = json.loads(url.read().decode())
-        print(url.getheaders())
-        print(url.getcode())
-        print('type of data: ' + str(type(data)))
-        print(len(data))
+        # print(url.getheaders())
+        # print(url.getcode())
+        # print('type of data: ' + str(type(data)))
+        # print(len(data))
         if url.getcode() == 200:
             if not data or len(data) == 0:
                 session['error'] = 500
@@ -91,17 +94,22 @@ def getLocationKey():
                 session['locationKey'] = locationKey
                 session['cityName'] = cityName
                 session['stateName'] = stateName
-                print(locationKey)
+                # print(locationKey)
                 return redirect('/results')
     except urllib.error.HTTPError as e:
-        if e.code == 503:
-            session['error'] = 503
+        if e.code: 
+            session['error'] = e.code
             return render_template ('index.html', errNum=session['error'])
-        if e.code > 400:
-            error = url.getcode()
-            session['error'] = error
-            return render_template ('index.html', errNum=session['error'])
-        print('Error code: ', e.code)
+        # elif e.code == 503:
+        #     session['error'] = 503
+        #     return render_template ('index.html', errNum=session['error'])
+        # elif e.code > 400:
+        #     session['error'] = e.code
+        #     return render_template ('index.html', errNum=session['error'])
+        # elif e.code: 
+        #     session['error'] = e.code
+        #     return render_template ('index.html', errNum=session['error'])
+        # print('Error code: ', e.code)
 
     
 #results of search
@@ -115,21 +123,26 @@ def results():
         date2 = dateutil.parser.parse(date)
         date3 = date2.strftime('%B'+" " + '%d' + ', ' + '%Y' + " " + '%I:%M%p')
         airPollen = data['DailyForecasts'][0]["AirAndPollen"]
-        print(date2)
+        print(json.dumps(data, indent=4, sort_keys=True))
         print(json.dumps(airPollen, indent=4, sort_keys=True))
         if data:
             found=True
             return render_template ('index.html', found=found, data=airPollen, date=date3, cityName=session['cityName'], stateName=session['stateName'])
 
     except urllib.error.HTTPError as e:
-        if e.code == 503:
-            session['error'] = 503
+        if e.code: 
+            session['error'] = e.code
             return render_template ('index.html', errNum=session['error'])
-        if e.code > 400:
-            error = url.getcode()
-            session['error'] = error
-            return render_template ('index.html', errNum=session['error'])
-        print('Error code: ', e.code)
+        # if e.code == 503:
+        #     session['error'] = 503
+        #     return render_template ('index.html', errNum=session['error'])
+        # elif e.code > 400:
+        #     session['error'] = e.code
+        #     return render_template ('index.html', errNum=session['error'])
+        # elif e.code: 
+        #     session['error'] = e.code
+        #     return render_template ('index.html', errNum=session['error'])
+        # print('Error code: ', e.code)
 
 
 # #use this RESULTS for testing
@@ -156,5 +169,5 @@ def results():
 
 
 if __name__=="__main__":
-    app.run()
+    app.run(debug=True)
  
