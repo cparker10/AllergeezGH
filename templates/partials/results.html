@@ -14,65 +14,65 @@
 
 {% if found == True %}
 <div class="row">
-<div class="success"> 
-        
-        <div class="jumbotron jumboheader h-40">
-                <div class = "container">   
-                        <p class="lead">Here is today's air quality and pollen report for</p>
-                        <p class="lead displaytext">{{ cityName }}, {{ stateName }} </p>
-                        <p class="lead subtext">last updated: {{ date }}</p>
-              </div>
-        </div> 
+        <div class="success"> 
+                
+                <div class="jumbotron jumboheader h-40">
+                        <div class = "container">   
+                                <p class="lead">Here is today's air quality and pollen report for</p>
+                                <p class="lead displaytext">{{ cityName }}, {{ stateName }} </p>
+                                <p class="lead subtext">last updated: {{ date }}</p>
+                        </div>
+                </div> 
 
 
-        <div class="row">
-        <div class="card-deck justify-content-center">
-        {% for x in data: %}
+                <div class="row">
+                        <div class="card-deck justify-content-center">
+                        {% for x in data: %}
 
-                {% if x['CategoryValue'] == 1 %}
-                <div class="card cardspace rounded" style="margin-bottom: 1rem;  background-color: #36802d">
-                        <div class="card-header h4">{% print(x['Name']) %}</div>
-                        <div class="card-body">
-                                <h5 class="card-title">{% print(x['Category']) %}</h5>
+                                {% if x['CategoryValue'] == 1 %}
+                                <div class="card cardspace rounded" style="margin-bottom: 1rem;  background-color: #36802d">
+                                        <div class="card-header h4">{% print(x['Name']) %}</div>
+                                        <div class="card-body">
+                                                <h5 class="card-title">{% print(x['Category']) %}</h5>
+                                        </div>
+                                </div>
+                                                
+                                {% elif x['CategoryValue'] == 2 %}
+                                <div class="card cardspace rounded" style="margin-bottom: 1rem; background-color: #77ab59">
+                                        <div class="card-header h4">{% print(x['Name']) %}</div>
+                                        <div class="card-body">
+                                                <h5 class="card-title">{% print(x['Category']) %}</h5>
+                                        </div>
+                                </div>
+                                {% elif x['CategoryValue'] == 3 %}
+                                <div class="card cardspace rounded" style="margin-bottom: 1rem;  background-color: #c9df8a; color: orange" >
+                                        <div class="card-header h4">{% print(x['Name']) %}</div>
+                                        <div class="card-body">
+                                                <h5 class="card-title">{% print(x['Category']) %}</h5>
+                                        </div>
+                                </div>
+                                {% elif x['CategoryValue'] == 4 %}
+                                <div class="card cardspace rounded border-danger" style="margin-bottom: 1rem;  background-color: #f0f7da; color: indianred;">
+                                        <div class="card-header h4">{% print(x['Name']) %}</div>
+                                        <div class="card-body">
+                                                <h5 class="card-title">{% print(x['Category']) %}</h5>
+                                        </div>
+                                </div>
+                                {% elif x['CategoryValue'] == 5 %}
+                                <div class="card cardspace rounded border-danger" style="margin-bottom: 1rem;  background-color:#f0f7da; color: indianred;" >
+                                        <div class="card-header h4">{% print(x['Name']) %}</div>
+                                        <div class="card-body">
+                                                <h5 class="card-title">{% print(x['Category']) %}</h5>
+                                        </div>
+                                </div>
+                                {% endif %}
+                        {% endfor %}
                         </div>
+                           
                 </div>
-                                
-                {% elif x['CategoryValue'] == 2 %}
-                <div class="card cardspace rounded" style="margin-bottom: 1rem; background-color: #77ab59">
-                        <div class="card-header h4">{% print(x['Name']) %}</div>
-                        <div class="card-body">
-                                <h5 class="card-title">{% print(x['Category']) %}</h5>
-                        </div>
-                </div>
-                {% elif x['CategoryValue'] == 3 %}
-                <div class="card cardspace rounded" style="margin-bottom: 1rem;  background-color: #c9df8a; color: orange" >
-                        <div class="card-header h4">{% print(x['Name']) %}</div>
-                        <div class="card-body">
-                                <h5 class="card-title">{% print(x['Category']) %}</h5>
-                        </div>
-                </div>
-                {% elif x['CategoryValue'] == 4 %}
-                <div class="card cardspace rounded border-danger" style="margin-bottom: 1rem;  background-color: #f0f7da; color: indianred;">
-                        <div class="card-header h4">{% print(x['Name']) %}</div>
-                        <div class="card-body">
-                                <h5 class="card-title">{% print(x['Category']) %}</h5>
-                        </div>
-                </div>
-                {% elif x['CategoryValue'] == 5 %}
-                <div class="card cardspace rounded border-danger" style="margin-bottom: 1rem;  background-color:#f0f7da; color: indianred;" >
-                        <div class="card-header h4">{% print(x['Name']) %}</div>
-                        <div class="card-body">
-                                <h5 class="card-title">{% print(x['Category']) %}</h5>
-                        </div>
-                </div>
-
         </div>
-                {% endif %}
-                {% endfor %} 
+   
 </div>
-</div>
-        
-</div>
-{% endif %}
+{% endif %} 
 
 

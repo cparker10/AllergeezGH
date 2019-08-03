@@ -33,7 +33,7 @@ def input():
 def getTextLocKey():
     lookUpText = session['textInput']
     lookUpText = urllib.parse.quote(lookUpText)
-    print('printing session text input from textloc function new lookuptext ' + lookUpText )
+    
     searchUrl = "http://dataservice.accuweather.com/locations/v1/cities/US/search?apikey="  + accuKey + "&q=" + lookUpText
     print('printing search URL from textLocKey function' + searchUrl)
     try:
@@ -70,7 +70,6 @@ def getTextLocKey():
 @app.route('/zipLocKey', methods=['GET'])
 def getLocationKey():
     zipCode = session['zipCode']
-    print('printing zipcode from ziplockey route: ' + zipCode)
     searchUrl = "http://dataservice.accuweather.com/locations/v1/postalcodes/US/search?apikey=" + accuKey + "&q=" + zipCode
     print(searchUrl)
 
@@ -104,26 +103,33 @@ def getLocationKey():
             return render_template ('index.html', errNum=session['error'])
         print('Error code: ', e.code)
 
-        
     
 #results of search
 @app.route('/results')
 def results():
     searchUrl = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/' + session['locationKey'] + "?&apikey=" + accuKey + '&details=true'
-    print(searchUrl)
-    with urllib.request.urlopen(searchUrl) as url:
-        data = json.loads(url.read().decode())
-    print(data)    
-    date = data['DailyForecasts'][0]['Date']
-    date2 = dateutil.parser.parse(date)
-    date3 = date2.strftime('%B'+" " + '%d' + ', ' + '%Y' + " " + '%I:%M%p')
-    airPollen = data['DailyForecasts'][0]["AirAndPollen"]
-    print(date2)
-    print(json.dumps(airPollen, indent=4, sort_keys=True))
-    
-    if data:
-        found=True
-        return render_template ('index.html', found=found, data=airPollen, date=date3, cityName=session['cityName'], stateName=session['stateName'])
+    try:
+        with urllib.request.urlopen(searchUrl) as url:
+            data = json.loads(url.read().decode())    
+        date = data['DailyForecasts'][0]['Date']
+        date2 = dateutil.parser.parse(date)
+        date3 = date2.strftime('%B'+" " + '%d' + ', ' + '%Y' + " " + '%I:%M%p')
+        airPollen = data['DailyForecasts'][0]["AirAndPollen"]
+        print(date2)
+        print(json.dumps(airPollen, indent=4, sort_keys=True))
+        if data:
+            found=True
+            return render_template ('index.html', found=found, data=airPollen, date=date3, cityName=session['cityName'], stateName=session['stateName'])
+
+    except urllib.error.HTTPError as e:
+        if e.code == 503:
+            session['error'] = 503
+            return render_template ('index.html', errNum=session['error'])
+        if e.code > 400:
+            error = url.getcode()
+            session['error'] = error
+            return render_template ('index.html', errNum=session['error'])
+        print('Error code: ', e.code)
 
 
 # #use this RESULTS for testing
@@ -150,5 +156,5 @@ def results():
 
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
  
