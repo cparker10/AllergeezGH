@@ -14,53 +14,52 @@
 
     <div class="bg1">
             
-        <div class="row headerrow">
-            <div class="col paddedcol">
-              <span class="titletext">Allergeez </span><span class="subtext">What's your allergy forecast for today?</span>
+            <div class="row headerrow">
+                <div class="col paddedcol">
+                    <span class="titletext">Allergeez </span><span class="subtext">What's your allergy forecast for today?</span>
+                </div>
             </div>
-        </div>
 
-        <!-- ***for use with flask routes -->
-        <div class="row h-30">
-            <div class="col-4 paddedcol">
-                <div class="formpadding">
-                <form action="/input" method="get" id="locationSearch">
-                    <div class="form-group">
-                        <label>Search by Zip Code</label>
-                        <input type="text" class="form-control" name="zipInput" aria-describedby="zipInputHelp" placeholder="Enter 5-digit US zip code" maxlength="5" minlength="5">
-                        
+            <!-- ***for use with flask routes -->
+            <div class="row h-30">
+                <div class="col-4 paddedcol">
+                    <div class="formpadding">
+                        <form action="/input" method="get" id="locationSearch">
+                            <div class="form-group">
+                                <label>Search by Zip Code</label>
+                                <input type="text" class="form-control" name="zipInput" aria-describedby="zipInputHelp" placeholder="Enter 5-digit US zip code" maxlength="5" minlength="5">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="cityInput">Search by City</label>
+                                <input type="text" class="form-control" name="cityInput" placeholder="Example: Irvine, CA">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-custom" id="submitInfo">Submit</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="cityInput">Search by City</label>
-                        <input type="text" class="form-control" name="cityInput" placeholder="Example: Irvine, CA">
-                    </div>
-                    
-                    <button type="submit" class="btn btn-custom" id="submitInfo">Submit</button>
-                </form>
-            </div>
-        </div>
+                </div>
 
-            <div class="col-8">
-                    <div class="row ">
+                <div class="col-8">
+                        <div class="row ">
                             <div class="col"></div>
                             <div class="col-6">
-                                    <div class="results">
-                                            {% include 'partials/results.html' %}
-                                    </div>
+                                <div class="results">
+                                        {% include 'partials/results.html' %}
+                                </div>
                             </div>
                             <div class="col"></div>
-                    </div>
-            </div>
+                        </div>
+                </div>
 
-        <div class="row fixed-bottom footerrow">
-            <div class="col paddedcol">
+                <div class="row fixed-bottom footerrow">
+                    <div class="col paddedcol"></div>
+                </div>
             </div>
-        </div>
     </div>
 
         
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
