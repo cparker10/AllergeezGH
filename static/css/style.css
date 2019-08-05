@@ -1,6 +1,15 @@
 body, html {
   height: 100%;
+  overflow-x: hidden;
 }
+
+/* html { 
+  background: url("/static/images/grass.jpeg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+} */
 
 .bg-grey-theme {
   background-color: #f8f8f8
@@ -8,7 +17,8 @@ body, html {
 
 .bg1 { 
     /* The image used */
-    background-image: url("/static/images/grass.jpeg");
+    /* background: url("/static/images/grass.jpeg"); */
+    background: url("/static/images/grass.jpeg") no-repeat center center fixed; 
   
     /* Full height */
     height: 100%;
@@ -18,6 +28,10 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+
   } 
 
   
@@ -56,7 +70,7 @@ max-width: 10rem; min-width: 10rem;
 
 
 .displaytext{
-  font-size: 40px;  
+  font-size: 30px;  
 }
 
 .error{
@@ -80,6 +94,7 @@ max-width: 10rem; min-width: 10rem;
   margin-top: 2rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  text-align: center;
 }
 
 .headerrow{
