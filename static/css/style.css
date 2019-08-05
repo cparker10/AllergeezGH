@@ -51,19 +51,17 @@ body, html {
   /* display: inline-block; */
  margin-right: auto;
  margin-left: auto;
-  max-width: 10rem; min-width: 10rem;
+max-width: 10rem; min-width: 10rem;
 }
 
 
 .displaytext{
-  font-size: 40px;
-  
+  font-size: 40px;  
 }
 
 .error{
   color: indianred;
   text-shadow: .25px .25px gray;
-  
 }
 
 .formpadding{
@@ -82,7 +80,6 @@ body, html {
   margin-top: 2rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  
 }
 
 .headerrow{

@@ -36,14 +36,11 @@ def getTextLocKey():
     lookUpText = urllib.parse.quote(lookUpText)
     
     searchUrl = "http://dataservice.accuweather.com/locations/v1/cities/US/search?apikey="  + accuKey + "&q=" + lookUpText
-    # print('printing search URL from textLocKey function' + searchUrl)
+    
     try:
         with urllib.request.urlopen(searchUrl) as url:
             data = json.loads(url.read().decode())
-        # print(url.getheaders())
-        # print(url.getcode())
-        # print('type of data: ' + str(type(data)))
-        # print(len(data))
+        
         if url.getcode() == 200:
             if not data or len(data) == 0:
                 session['error'] = 500
@@ -55,34 +52,24 @@ def getTextLocKey():
                 session['locationKey'] = locationKey
                 session['cityName'] = cityName
                 session['stateName'] = stateName
-                # print(locationKey)
+                
                 return redirect('/results')
     except urllib.error.HTTPError as e:
         if e.code: 
             session['error'] = e.code
             return render_template ('index.html', errNum=session['error'])
-        # if e.code == 503:
-        #     session['error'] = 503
-        #     return render_template ('index.html', errNum=session['error'])
-        # if e.code > 400:
-        #     session['error'] = e.code
-        #     return render_template ('index.html', errNum=session['error'])
-        # print('Error code: ', e.code)
+
     
 
 @app.route('/zipLocKey', methods=['GET'])
 def getLocationKey():
     zipCode = session['zipCode']
     searchUrl = "http://dataservice.accuweather.com/locations/v1/postalcodes/US/search?apikey=" + accuKey + "&q=" + zipCode
-    # print(searchUrl)
-
+    
     try:
         with urllib.request.urlopen(searchUrl) as url:
             data = json.loads(url.read().decode())
-        # print(url.getheaders())
-        # print(url.getcode())
-        # print('type of data: ' + str(type(data)))
-        # print(len(data))
+        
         if url.getcode() == 200:
             if not data or len(data) == 0:
                 session['error'] = 500
@@ -94,22 +81,13 @@ def getLocationKey():
                 session['locationKey'] = locationKey
                 session['cityName'] = cityName
                 session['stateName'] = stateName
-                # print(locationKey)
+                
                 return redirect('/results')
     except urllib.error.HTTPError as e:
         if e.code: 
             session['error'] = e.code
             return render_template ('index.html', errNum=session['error'])
-        # elif e.code == 503:
-        #     session['error'] = 503
-        #     return render_template ('index.html', errNum=session['error'])
-        # elif e.code > 400:
-        #     session['error'] = e.code
-        #     return render_template ('index.html', errNum=session['error'])
-        # elif e.code: 
-        #     session['error'] = e.code
-        #     return render_template ('index.html', errNum=session['error'])
-        # print('Error code: ', e.code)
+
 
     
 #results of search
@@ -133,41 +111,10 @@ def results():
         if e.code: 
             session['error'] = e.code
             return render_template ('index.html', errNum=session['error'])
-        # if e.code == 503:
-        #     session['error'] = 503
-        #     return render_template ('index.html', errNum=session['error'])
-        # elif e.code > 400:
-        #     session['error'] = e.code
-        #     return render_template ('index.html', errNum=session['error'])
-        # elif e.code: 
-        #     session['error'] = e.code
-        #     return render_template ('index.html', errNum=session['error'])
-        # print('Error code: ', e.code)
 
 
-# #use this RESULTS for testing
-# @app.route('/results')
-# def results():
-#     with open('boston.txt', 'r') as handle:
-#         data = json.load(handle)
-#     date = data['DailyForecasts'][0]['Date']
-#     date2 = dateutil.parser.parse(date)
-#     date3 = date2.strftime('%B'+" " + '%d' + ', ' + '%Y' + " " + '%I:%M%p')
-
-
-#     # date = data['DailyForecasts'][0]['Date']
-#     # # datetimestr = '2019-07-28 20:00:00-04:00'
-#     # date2 = datetime.datetime.strptime(datetimestr, '%Y-%m-%d %H:%M:%S%z')
-#     # date2 = date2.strftime('%B'+ " " + '%d' + ', ' + '%Y' + " " + '%I:%M%p')
-
-#     airPollen = data["DailyForecasts"][0]["AirAndPollen"]
-#     # airPollen=data
-#     print(json.dumps(airPollen, indent=4, sort_keys=True))
-#     if data:
-#         found=True
-#     return render_template ('index.html', found=found, data=airPollen, date=date3, cityName="Detroit", stateName="Michigan")
 
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
  
